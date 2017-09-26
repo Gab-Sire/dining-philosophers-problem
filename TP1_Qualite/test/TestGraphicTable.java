@@ -34,9 +34,9 @@ public class TestGraphicTable extends TestCase {
         GraphicTable.setCompte(compte);
         
         table = new GraphicTable();
-        chopsticksArray = table.getChops();
+        chopsticksArray = table.getChopsticksArray();
         platesArray = table.getPlates();
-        boolChopsticksArray = table.getChopsticks();
+        boolChopsticksArray = table.getBooleanChopsticksArray();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class TestGraphicTable extends TestCase {
     }
     
     public void testDoThinking(){
-        table.doThinking(indexPlatesArray);
+        table.doThinking(indexPlatesArray, this);
         assertEquals(Color.black, platesArray[indexPlatesArray].getColor());
         assertEquals(--compte, GraphicTable.getCompte());
     }
@@ -75,15 +75,7 @@ public class TestGraphicTable extends TestCase {
         assertEquals(true, boolChopsticksArray[indexChopsticksArray]);
     }
 
-    public void testTakeChopstick() {
-        table.takeChopstick(idColorYellow, indexChopsticksArray);
-        assertEquals(Color.yellow, chopsticksArray[indexChopsticksArray].getColor());
-    }
-
-    public void testReleaseChopstick() {
-        table.releaseChopstick(idColorYellow, indexChopsticksArray);
-        assertEquals(Color.black, chopsticksArray[indexChopsticksArray].getColor());
-    }
+ 
     
    
 

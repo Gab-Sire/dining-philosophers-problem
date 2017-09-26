@@ -6,36 +6,44 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class GraphicTable extends Frame implements WindowListener {
+
     public static final int NUMBER_PEOPLE = 5;
     public static final int TOTAL_DEGREES_IN_CIRCLE = 360;
-    static private int compte = 0;
-    static private int enAttente = 0;
+    public static final String PROGRAM_TITLE = "Dining Philosophers";
+    public static final int TABLE_WIDTH = 200;
+    public static final int TABLE_HEIGHT = 200;
+    public static final Color TABLE_BACKGROUND = Color.darkGray;
+
+    static public int compte = 0;
+    static public int enAttente = 0;
     private Point screenCenter;
     private GraphicPlate plates[];
-    private GraphicChopstick chops[];
-    private boolean chopsticks[];
+    private GraphicChopstick[] chopsticksArray;
+    private boolean[] booleanChopsticksArray;
 
     public GraphicTable() {
-        super();
 
-        chopsticks = new boolean[5];
-        for (int i = 0; i <= 4; i++)
-            chopsticks[i] = true;
         addWindowListener(this);
-        setTitle("Dining Philosophers");
-        setSize(200, 200);
-        setBackground(Color.darkGray);
+        setTitle(PROGRAM_TITLE);
+        setSize(TABLE_WIDTH, TABLE_HEIGHT);
+        setBackground(TABLE_BACKGROUND);
+
+        booleanChopsticksArray = new boolean[NUMBER_PEOPLE];
+        plates = new GraphicPlate[NUMBER_PEOPLE];
+        chopsticksArray = new GraphicChopstick[NUMBER_PEOPLE];
+
+        for (int i = 0; i <= 4; i++) {
+            booleanChopsticksArray[i] = true;
+        }
 
         screenCenter = new Point(getSize().width / 2, getSize().height / 2);
 
-        plates = new GraphicPlate[5];
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < NUMBER_PEOPLE; i++) {
             plates[i] = new GraphicPlate(i, screenCenter, new Point(screenCenter.x, screenCenter.y - 70), 20);
         }
 
-        chops = new GraphicChopstick[5];
         for (int i = 0; i < 5; i++) {
-            chops[i] = new GraphicChopstick(i, screenCenter,
+            chopsticksArray[i] = new GraphicChopstick(i, screenCenter,
                     new Point(screenCenter.x, screenCenter.y - 70),
                     new Point(screenCenter.x, screenCenter.y - 40));
         }
@@ -54,7 +62,6 @@ public class GraphicTable extends Frame implements WindowListener {
         p2.start();
         p3.start();
         p4.start();
-
 
     }
 
@@ -80,14 +87,6 @@ public class GraphicTable extends Frame implements WindowListener {
     public void windowDeactivated(WindowEvent evt) {
     }
 
-    public synchronized void becomesHungry(int phID) {
-        while (compte == NUMBER_PEOPLE || enAttente > 0) {
-            attente();
-        }
-        compte++;
-        plates[phID].setColorByID(phID);
-        repaint();
-    }
 
     public GraphicPlate[] getPlates() {
         return plates;
@@ -100,8 +99,8 @@ public class GraphicTable extends Frame implements WindowListener {
     public static void setCompte(int compte) {
         GraphicTable.compte = compte;
     }
-    
-    private void attente() {
+
+    private synchronized void attente() {
         try {
             enAttente++;
             wait();
@@ -110,64 +109,61 @@ public class GraphicTable extends Frame implements WindowListener {
             System.out.println(e);
         }
     }
-
-    public synchronized void doThinking(int phID) {
-        plates[phID].setColorByID(-1);
+    
+     public synchronized void doThinking(int phID, GraphicTable graphicTable) {
+        this.plates[phID].setColorByID(-1);
         repaint();
         compte--;
         notify();
     }
 
+
     public synchronized void take(int c) {
-        while (!chopsticks[c]) {
+        while (!booleanChopsticksArray[c]) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 System.out.println("boom !");
             }
         }
-        chopsticks[c] = false;
+        booleanChopsticksArray[c] = false;
 
     }
 
     public synchronized void release(int c) {
-        chopsticks[c] = true;
+        booleanChopsticksArray[c] = true;
         notifyAll();
 
     }
 
-    public boolean[] getChopsticks() {
-        return chopsticks;
-    }
-    
-
-    public void takeChopstick(int phID, int chID) {
-        System.out.println(String.format("repainting ph %d - color %d ", phID, chID ));
-        chops[chID].setColorByID(phID);
-        repaint();
+    public boolean[] getBooleanChopsticksArray() {
+        return booleanChopsticksArray;
     }
 
-    public void releaseChopstick(int phID, int chID) {
-        chops[chID].setColorByID(-1);
-        repaint();
-    }
 
-    public GraphicChopstick[] getChops() {
-        return chops;
+    public GraphicChopstick[] getChopsticksArray() {
+        return chopsticksArray;
     }
 
     public void paint(Graphics g) {
         for (int i = 0; i < 5; i++) {
             plates[i].draw(g);
-            chops[i].draw(g);
+            chopsticksArray[i].draw(g);
         }
     }
-    
-    public static int calculateNbDegreesPerPerson(){
-        return TOTAL_DEGREES_IN_CIRCLE/NUMBER_PEOPLE;
+
+    public static int calculateNbDegreesPerPerson() {
+        return TOTAL_DEGREES_IN_CIRCLE / NUMBER_PEOPLE;
     }
 
+    public void colorChopstick(int chID, int phID) {
+        this.chopsticksArray[chID].setColorByID(phID);
+        repaint();
+    }
+    
+    public void colorPlate(int chID, int phID){
+        this.plates[chID].setColorByID(phID);
+        repaint();
+    }
 
-    
-    
 }
