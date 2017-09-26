@@ -50,7 +50,7 @@ public class GraphicTable extends Frame implements WindowListener {
 
         show();
         setResizable(false);
-
+        
         Philosopher p0 = new Philosopher(0, this, 0, 4);
         Philosopher p1 = new Philosopher(1, this, 1, 0);
         Philosopher p2 = new Philosopher(2, this, 2, 1);
@@ -64,29 +64,6 @@ public class GraphicTable extends Frame implements WindowListener {
         p4.start();
 
     }
-
-    public void windowOpened(WindowEvent evt) {
-    }
-
-    public void windowClosing(WindowEvent evt) {
-        System.exit(0);
-    }
-
-    public void windowClosed(WindowEvent evt) {
-    }
-
-    public void windowIconified(WindowEvent evt) {
-    }
-
-    public void windowDeiconified(WindowEvent evt) {
-    }
-
-    public void windowActivated(WindowEvent evt) {
-    }
-
-    public void windowDeactivated(WindowEvent evt) {
-    }
-
 
     public GraphicPlate[] getPlates() {
         return plates;
@@ -109,14 +86,13 @@ public class GraphicTable extends Frame implements WindowListener {
             System.out.println(e);
         }
     }
-    
-     public synchronized void doThinking(int phID, GraphicTable graphicTable) {
+
+    public synchronized void doThinking(int phID, GraphicTable graphicTable) {
         this.plates[phID].setColorByID(-1);
         repaint();
         compte--;
         notify();
     }
-
 
     public synchronized void take(int c) {
         while (!booleanChopsticksArray[c]) {
@@ -127,7 +103,6 @@ public class GraphicTable extends Frame implements WindowListener {
             }
         }
         booleanChopsticksArray[c] = false;
-
     }
 
     public synchronized void release(int c) {
@@ -139,7 +114,6 @@ public class GraphicTable extends Frame implements WindowListener {
     public boolean[] getBooleanChopsticksArray() {
         return booleanChopsticksArray;
     }
-
 
     public GraphicChopstick[] getChopsticksArray() {
         return chopsticksArray;
@@ -160,10 +134,40 @@ public class GraphicTable extends Frame implements WindowListener {
         this.chopsticksArray[chID].setColorByID(phID);
         repaint();
     }
-    
-    public void colorPlate(int chID, int phID){
+
+    public void colorPlate(int chID, int phID) {
         this.plates[chID].setColorByID(phID);
         repaint();
+    }
+
+    public synchronized void becomesHungry(int phID, Philosopher philosopher) {
+        System.out.println(philosopher.getName() + " is hungry");
+        while (compte == NUMBER_PEOPLE || enAttente > 0) {
+            attente();
+        }
+        compte++;
+    }
+
+    public void windowOpened(WindowEvent evt) {
+    }
+
+    public void windowClosing(WindowEvent evt) {
+        System.exit(0);
+    }
+
+    public void windowClosed(WindowEvent evt) {
+    }
+
+    public void windowIconified(WindowEvent evt) {
+    }
+
+    public void windowDeiconified(WindowEvent evt) {
+    }
+
+    public void windowActivated(WindowEvent evt) {
+    }
+
+    public void windowDeactivated(WindowEvent evt) {
     }
 
 }

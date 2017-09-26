@@ -16,9 +16,9 @@ import src.*;
  */
 public class TestPhilosopher extends TestCase {
 
-    int idPhilosopher, idLeftChopstick, idRightChopstick, idColorYellow;
+    int philosopherID, leftChopstickID, rightChopstickID, idColor;
     GraphicTable table;
-    Philosopher philosopher;
+    Philosopher philosopher01;
 
     public TestPhilosopher(String testName) {
         super(testName);
@@ -26,41 +26,54 @@ public class TestPhilosopher extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        idPhilosopher = 0;
-        idLeftChopstick = 1;
-        idRightChopstick = 0;
-        idColorYellow = 3;
+        philosopherID = 2;
+        leftChopstickID = 1;
+        rightChopstickID = 0;
+        idColor = philosopherID;
         table = new GraphicTable();
-        philosopher = new Philosopher(idPhilosopher, table, idLeftChopstick, idRightChopstick);
+        philosopher01 = new Philosopher(philosopherID, table, leftChopstickID, rightChopstickID);
+        philosopher01.start();
     }
 
     @Override
     protected void tearDown() throws Exception {
-        idPhilosopher = 0;
-        idLeftChopstick = 0;
-        idRightChopstick = 0;
-        idColorYellow = 0;
+        philosopherID = 0;
+        leftChopstickID = 0;
+        rightChopstickID = 0;
+        idColor = 0;
         table = null;
-        philosopher = null;
+        philosopher01 = null;
     }
 
     @Test(timeout = 2000)
     public void testDoSleep() throws InterruptedException {
         Thread thread = new Thread();
         thread.sleep(5000);
-        philosopher.doSleep(3000);
+        philosopher01.doSleep(3000);
 
         assertTrue(thread.getState() == thread.getState().TIMED_WAITING);
     }
 
-    public void testTakeChopstick() {
-        takeChopstick(idColorYellow, indexChopsticksArray);
-        philosopher.table;
-        assertEquals(Color.yellow, chopsticksArray[indexChopsticksArray].getColor());
+    public void testTakeLeftChopstick() {
+        philosopher01.takeLeftChopstick();
+        GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
+        assertEquals(idColor, chopsticksArray[leftChopstickID].getColor());
     }
 
-    public void testReleaseChopstick() {
-        releaseChopstick(indexChopsticksArray);
-        assertEquals(Color.black, chopsticksArray[indexChopsticksArray].getColor());
+    public void testTakeRightChopstick() {
+        philosopher01.takeLeftChopstick();
+        GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
+        assertEquals(idColor, chopsticksArray[rightChopstickID].getColor());
+    }
+
+    public void testReleaseLeftChopstick() {
+        philosopher01.releaseLeftChopstick();
+        GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
+        assertEquals(Color.black, chopsticksArray[leftChopstickID].getColor());
+    }
+    public void testReleaseRightChopstick() {
+        philosopher01.releaseRightChopstick();
+        GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
+        assertEquals(Color.black, chopsticksArray[rightChopstickID].getColor());
     }
 }
