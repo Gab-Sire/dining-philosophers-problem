@@ -2,10 +2,14 @@ package src;
 
 public class Philosopher extends Thread {
 
-    final int timeThink_max = 20;
-    final int timeNextFork = 20;
-    final int timeEat_max = 20;
+    public static final int TIME_THINK_MAX = 1000;
+    public static final int TIME_NEXT_FORK = 300;
+    public static final int TIME_EAT_MAX = 300;
+    public static final int COLOR_BLACK = -1;
+    public static final String EAT = "eats";
+    public static final String THINK = "thinks";
     
+
     private GraphicTable table;
 
     private int leftChopstickID;
@@ -25,78 +29,88 @@ public class Philosopher extends Thread {
     public synchronized void run() {
         doSleep(500l);
         for (;;) {
-            
+
             table.doesThinking(ID);
-            think();
-            table.becomesHungry(ID, this);
-            doSleep(timeNextFork);
+            thinks();
+            becomesHungry(ID);
+            doSleep(TIME_NEXT_FORK);
             preparesToEat();
             eats();
+            finishesToEat();
         }
     }
 
-    public boolean isAsleep() {
-        return asleep;
-    }
-
-    public synchronized void think() {
+    public synchronized void thinks() {
         System.out.println(getName() + " thinks");
-        this.table.colorPlate(-1, this.ID);
-        long timeThinking = (long)Math.random() * timeThink_max;
+
+        long timeThinking = (long) Math.random() * TIME_THINK_MAX;
         doSleep(timeThinking);
         System.out.println(getName() + " finished thinking");
+    }
+
+    public synchronized void becomesHungry(int phID) {
+        System.out.println(this.getName() + " is hungry");
+        while (this.table.compte == this.table.NUMBER_PEOPLE || this.table.enAttente > 0) {
+            this.table.attente();
+        }
+        GraphicTable.compte++;
     }
 
     public synchronized void preparesToEat() {
         this.table.colorPlate(this.ID, this.ID);
         takeChopsticks();
-        
     }
 
     public synchronized void eats() {
-        double timeToSleep = Math.random() * timeEat_max;
+        double timeToSleep = Math.random() * TIME_EAT_MAX;
         System.out.println(getName() + " eats for " + timeToSleep);
         doSleep((long) timeToSleep);
         System.out.println(getName() + " finished eating");
+    }
+
+    public synchronized void finishesToEat() {
         releaseChopsticks();
+        this.table.colorPlate(COLOR_BLACK, this.ID);
     }
 
     public synchronized void takeChopsticks() {
         takeLeftChopstick();
         takeRightChopstick();
     }
-    
-    public synchronized void releaseChopsticks(){
+
+    public synchronized void takeLeftChopstick() {
+        takeChopstick(this.leftChopstickID);
+    }
+
+    public synchronized void takeRightChopstick() {
+        takeChopstick(this.rightChopstickID);
+    }
+
+    public synchronized void takeChopstick(int chopstickID) {
+        logChopstickAction("wants", chopstickID);
+        System.out.println(String.format("repainting ph %d - color %d ", chopstickID, this.ID));
+        table.colorChopstick(this.ID, chopstickID);
+        table.take(chopstickID);
+        logChopstickAction("got", chopstickID);
+    }
+
+    public synchronized void releaseChopsticks() {
         releaseLeftChopstick();
         releaseRightChopstick();
     }
 
     public synchronized void releaseLeftChopstick() {
-        table.colorChopstick(-1, this.leftChopstickID);
-        table.release(this.leftChopstickID);
-        logChopstickAction("release", this.leftChopstickID);
+        releaseChopstick(leftChopstickID);
     }
 
     public synchronized void releaseRightChopstick() {
-        table.colorChopstick(-1, this.rightChopstickID);
-        table.release(this.rightChopstickID);
-        logChopstickAction("release", this.rightChopstickID);
+        releaseChopstick(this.rightChopstickID);
     }
 
-    public synchronized void takeLeftChopstick() {
-        logChopstickAction("wants", this.leftChopstickID);
-        System.out.println(String.format("repainting ph %d - color %d ", this.leftChopstickID, this.ID));
-        table.colorChopstick(this.ID, this.leftChopstickID);
-        table.take(this.leftChopstickID);
-        logChopstickAction("got", this.leftChopstickID);
-    }
-
-    public synchronized void takeRightChopstick() {
-        logChopstickAction("wants", this.rightChopstickID);
-        System.out.println(String.format("repainting ph %d - color %d ", this.rightChopstickID, this.ID));
-        table.colorChopstick(this.ID, this.rightChopstickID);
-        table.take(this.rightChopstickID);
-        logChopstickAction("got", this.rightChopstickID);
+    public synchronized void releaseChopstick(int chopstickID) {
+        table.colorChopstick(COLOR_BLACK, chopstickID);
+        table.release(chopstickID);
+        logChopstickAction("release", chopstickID);
     }
 
     public synchronized void logChopstickAction(String action, int chopstickID) {
@@ -112,33 +126,5 @@ public class Philosopher extends Thread {
             System.out.println(e);
         }
         asleep = false;
-    }
-
-    public GraphicTable getTable() {
-        return table;
-    }
-
-    public int getLeftChopstickID() {
-        return leftChopstickID;
-    }
-
-    public int getRightChopstickID() {
-        return rightChopstickID;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setTable(GraphicTable table) {
-        this.table = table;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public void setAsleep(boolean asleep) {
-        this.asleep = asleep;
     }
 }

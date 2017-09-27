@@ -54,7 +54,7 @@ public class TestGraphicTable extends TestCase {
     }
     
     public void testBecomesHungry(){
-        table.becomesHungry(idColorYellow, null);
+        null.becomesHungry(idColorYellow);
         assertEquals(Color.yellow, platesArray[indexPlatesArray].getColor());
         assertEquals(++compte, GraphicTable.getCompte());
     }

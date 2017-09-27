@@ -20,22 +20,6 @@ public abstract class GraphicTableElement {
     protected int angle;
     private static final Color[] COLOR_ARRAY = {Color.black, Color.red, Color.blue, Color.green, Color.yellow, Color.white};
 
-    public int getAngle() {
-        return angle;
-    }
-
-    public void setAngle(int angle) {
-        this.angle = angle;
-    }
-
-    public void setColorByID(int colorID) {
-        this.color = COLOR_ARRAY[colorID + 1];
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
     public int calculateAngle(int ID) {
         return GraphicTable.calculateNbDegreesPerPerson() * ID;
     }
@@ -58,5 +42,21 @@ public abstract class GraphicTableElement {
     }
 
     public abstract void draw(Graphics g);
+    
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
+    public void setColorByID(int colorID) {
+        this.color = COLOR_ARRAY[colorID + 1];
+    }
+
+    public Color getColor() {
+        return color;
+    }
 
 }
