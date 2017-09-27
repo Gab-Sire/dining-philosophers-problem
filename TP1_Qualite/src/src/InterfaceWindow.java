@@ -23,6 +23,9 @@ public class InterfaceWindow extends Frame implements WindowListener {
     public static final int WINDOW_WIDTH = 400;
     protected Point screenCenter;
 
+    public InterfaceWindow() {
+    }
+
     public void configureWindow() {
         addWindowListener(this);
         setTitle(PROGRAM_TITLE);
