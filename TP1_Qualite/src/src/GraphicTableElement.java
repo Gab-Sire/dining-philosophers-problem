@@ -14,12 +14,13 @@ import java.awt.Point;
  * @author Gabriel Cyr
  */
 public abstract class GraphicTableElement {
-
+    
+    private static final Color[] COLOR_ARRAY = {Color.black, Color.red, Color.blue, Color.green, Color.yellow, Color.white};
+    
     protected int ID;
     protected Color color;
     protected int angle;
-    private static final Color[] COLOR_ARRAY = {Color.black, Color.red, Color.blue, Color.green, Color.yellow, Color.white};
-
+    
     public int calculateAngle(int ID) {
         return GraphicTable.calculateNbDegreesPerPerson() * ID;
     }

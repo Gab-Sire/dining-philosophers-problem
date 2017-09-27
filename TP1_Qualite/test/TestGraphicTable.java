@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import java.awt.Color;
 import junit.framework.TestCase;
 import src.*;
 
@@ -19,6 +20,7 @@ public class TestGraphicTable extends TestCase {
     Philosopher[] philosophersArray;
     int idPhilosopher01, philosophersArraySize, idRightChopstick01;
     int angle01;
+    Color colorYellow;
     
     @Override
     protected void setUp() throws Exception {
@@ -26,6 +28,7 @@ public class TestGraphicTable extends TestCase {
         indexChopsticksArray = 0;
         indexPlatesArray = 3;
         idColorYellow = 3;
+        colorYellow = Color.yellow;
         compte = 0;
         
         table = new GraphicTable();
@@ -47,6 +50,7 @@ public class TestGraphicTable extends TestCase {
         indexChopsticksArray = 0;
         indexPlatesArray = 0;
         idColorYellow = 0;
+        colorYellow = null;
         compte = 0;
         
         table = null;
@@ -109,13 +113,13 @@ public class TestGraphicTable extends TestCase {
     public void testColorChopstick(){
         table.colorChopstick(idColorYellow, indexChopsticksArray);
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
-        assertEquals(idColorYellow, chopsticksArray[indexChopsticksArray]);
+        assertEquals(colorYellow, chopsticksArray[indexChopsticksArray].getColor());
     }
     
     public void testColorPlate(){
         table.colorPlate(idColorYellow, indexPlatesArray);
         GraphicPlate[] platesArray = table.getPlates();
-        assertEquals(idColorYellow, platesArray[indexPlatesArray]);
+        assertEquals(colorYellow, platesArray[indexPlatesArray].getColor());
     }
     
     public void testCalculateNbDegreesPerPerson(){

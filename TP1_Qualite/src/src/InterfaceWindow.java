@@ -21,6 +21,7 @@ public class InterfaceWindow extends Frame implements WindowListener {
     public static final Color WINDOW_BACKGROUND = Color.darkGray;
     public static final int WINDOW_HEIGHT = 400;
     public static final int WINDOW_WIDTH = 400;
+    
     protected Point screenCenter;
 
     public InterfaceWindow() {

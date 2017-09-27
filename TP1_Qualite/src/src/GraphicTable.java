@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * 
+ *
  * @author Gabriel Cyr
  */
 public class GraphicTable extends InterfaceWindow {
@@ -17,8 +17,8 @@ public class GraphicTable extends InterfaceWindow {
     public static final int ELEMENT_TRANSLATION_Y_START = 70;
     public static final int ELEMENT_TRANSLATION_Y_END = 40;
 
-    static public int compte = 0;
-    static public int enAttente = 0;
+    private int compte = 0;
+    private int enAttente = 0;
     private GraphicPlate plates[];
     private GraphicChopstick[] chopsticksArray;
     private boolean[] booleanChopsticksArray;
@@ -98,7 +98,7 @@ public class GraphicTable extends InterfaceWindow {
             try {
                 wait();
             } catch (InterruptedException e) {
-               e.printStackTrace();
+                e.printStackTrace();
             }
         }
         booleanChopsticksArray[c] = false;
@@ -150,6 +150,18 @@ public class GraphicTable extends InterfaceWindow {
 
     public GraphicChopstick[] getChopsticksArray() {
         return chopsticksArray;
+    }
+
+    public int getCompte() {
+        return compte;
+    }
+
+    public void setCompte(int compte) {
+        this.compte = compte;
+    }
+
+    public int getEnAttente() {
+        return enAttente;
     }
 
 }

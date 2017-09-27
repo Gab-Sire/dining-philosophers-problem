@@ -24,7 +24,6 @@ public class Philosopher extends Thread {
     public static final String PHILOSOPHER = "Philosopher ";
 
     private GraphicTable table;
-
     private int leftChopstickID;
     private int rightChopstickID;
     private int ID;
@@ -62,10 +61,14 @@ public class Philosopher extends Thread {
 
     public synchronized void becomesHungry() {
         logPhilosopherAction(HUNGRY);
-        while (this.table.compte == this.table.NUMBER_PEOPLE || this.table.enAttente > 0) {
+        int compte = this.table.getCompte();
+        int attente = this.table.getEnAttente();
+        while (this.table.NUMBER_PEOPLE == compte || 0 < attente) {
             this.table.attente();
         }
-        GraphicTable.compte++;
+        compte++;
+        table.setCompte(compte);
+        
     }
 
     public synchronized void preparesToEat() {

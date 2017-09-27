@@ -52,9 +52,9 @@ public class TestPhilosopher extends TestCase {
     }
 
     public void testBecomesHungry() {
-        int compteInitial = GraphicTable.compte;
+        int compteInitial = table.getCompte();
         philosopher01.becomesHungry();
-        assertEquals(compteInitial + 1, GraphicTable.compte);
+        assertEquals(compteInitial + 1, table.getCompte());
     }
 
     public void testPreparesToEat() {
