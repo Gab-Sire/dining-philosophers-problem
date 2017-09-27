@@ -9,7 +9,10 @@ import java.awt.*;
  * @author Gabriel Cyr
  */
 public class GraphicPlate extends GraphicTableElement{
-
+    
+    public static final int CENTER_PLATE_TRANSLATION_X = 10;
+    public static final int CENTER_PLATE_TRANSLATION_Y = 5;
+    
     private Point centerPlate;
     private int size;
 
@@ -19,8 +22,8 @@ public class GraphicPlate extends GraphicTableElement{
         this.color = Color.black;
         this.angle = calculateAngle(ID);
         this.centerPlate = new Point(rotate(coords, centerTable, angle));
-        this.centerPlate.x -= 10;
-        this.centerPlate.y += 5;
+        this.centerPlate.x -= CENTER_PLATE_TRANSLATION_X;
+        this.centerPlate.y += CENTER_PLATE_TRANSLATION_Y;
     }
 
     public void draw(Graphics g) {

@@ -9,7 +9,10 @@ import java.awt.*;
  * @author Gabriel Cyr
  */
 public class GraphicChopstick extends GraphicTableElement {
-
+    
+    public static final int CHOPSTICK_COORD_TRANSLATION_Y = 15;
+    public static final int CHOPSTICK_ADDITIONAL_ANGLE = 36;
+    
     private Point coordStart;
     private Point coordEnd;
 
@@ -18,13 +21,13 @@ public class GraphicChopstick extends GraphicTableElement {
         this.color = Color.black;
         this.angle = calculateAngle(ID);
         this.coordStart = new Point(rotate(coordStart, centerTable, angle));
-        this.coordStart.y += 15;
+        this.coordStart.y += CHOPSTICK_COORD_TRANSLATION_Y;
         this.coordEnd = new Point(rotate(coordEnd, centerTable, angle));
-        this.coordEnd.y += 15;
+        this.coordEnd.y += CHOPSTICK_COORD_TRANSLATION_Y;
     }
 
     public int calculateAngle(int ID) {
-        return super.calculateAngle(ID) + 36;
+        return super.calculateAngle(ID) + CHOPSTICK_ADDITIONAL_ANGLE;
     }
 
     public void draw(Graphics g) {

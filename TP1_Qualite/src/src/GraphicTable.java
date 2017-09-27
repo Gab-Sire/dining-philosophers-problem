@@ -14,6 +14,8 @@ public class GraphicTable extends InterfaceWindow {
     public static final int NUMBER_PEOPLE = 5;
     public static final int TOTAL_DEGREES_IN_CIRCLE = 360;
     public static final int SIZE_PLATE = 20;
+    public static final int ELEMENT_TRANSLATION_Y_START = 70;
+    public static final int ELEMENT_TRANSLATION_Y_END = 40;
 
     static public int compte = 0;
     static public int enAttente = 0;
@@ -39,7 +41,7 @@ public class GraphicTable extends InterfaceWindow {
     public void initializeBooleanArray() {
         booleanChopsticksArray = new boolean[NUMBER_PEOPLE];
 
-        for (int i = 0; i <= 4; i++) {
+        for (int i = 0; i < booleanChopsticksArray.length; i++) {
             booleanChopsticksArray[i] = true;
         }
     }
@@ -47,18 +49,18 @@ public class GraphicTable extends InterfaceWindow {
     public void initializePlates() {
         plates = new GraphicPlate[NUMBER_PEOPLE];
 
-        for (int i = 0; i < NUMBER_PEOPLE; i++) {
-            plates[i] = new GraphicPlate(i, screenCenter, new Point(screenCenter.x, screenCenter.y - 70), SIZE_PLATE);
+        for (int i = 0; i < plates.length; i++) {
+            plates[i] = new GraphicPlate(i, screenCenter, new Point(screenCenter.x, screenCenter.y - ELEMENT_TRANSLATION_Y_START), SIZE_PLATE);
         }
     }
 
     public void initializeChopsticks() {
         chopsticksArray = new GraphicChopstick[NUMBER_PEOPLE];
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < chopsticksArray.length; i++) {
             chopsticksArray[i] = new GraphicChopstick(i, screenCenter,
-                    new Point(screenCenter.x, screenCenter.y - 70),
-                    new Point(screenCenter.x, screenCenter.y - 40));
+                    new Point(screenCenter.x, screenCenter.y - ELEMENT_TRANSLATION_Y_START),
+                    new Point(screenCenter.x, screenCenter.y - ELEMENT_TRANSLATION_Y_END));
         }
     }
 
@@ -68,7 +70,6 @@ public class GraphicTable extends InterfaceWindow {
         for (int i = 0; i < philosophersArray.length; i++) {
             instanciatePhilosopher(i, philosophersArray);
         }
-
         startPhilosophers(philosophersArray);
     }
 
@@ -86,7 +87,7 @@ public class GraphicTable extends InterfaceWindow {
     }
 
     public synchronized void doesThinking(int phID) {
-        plates[phID].setColorByID(-1);
+        plates[phID].setColorByID(Philosopher.COLOR_BLACK);
         repaint();
         compte--;
         notify();
@@ -133,7 +134,7 @@ public class GraphicTable extends InterfaceWindow {
     }
 
     public void paint(Graphics g) {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < NUMBER_PEOPLE; i++) {
             plates[i].draw(g);
             chopsticksArray[i].draw(g);
         }
@@ -149,22 +150,6 @@ public class GraphicTable extends InterfaceWindow {
 
     public GraphicChopstick[] getChopsticksArray() {
         return chopsticksArray;
-    }
-
-    public static int getCompte() {
-        return compte;
-    }
-
-    public static void setCompte(int compte) {
-        GraphicTable.compte = compte;
-    }
-
-    public static int getEnAttente() {
-        return enAttente;
-    }
-
-    public static void setEnAttente(int enAttente) {
-        GraphicTable.enAttente = enAttente;
     }
 
 }

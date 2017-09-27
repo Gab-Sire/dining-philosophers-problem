@@ -12,7 +12,7 @@ import src.*;
 
 /**
  *
- * @author portable
+ * @author Gabriel Cyr
  */
 public class TestPhilosopher extends TestCase {
 
@@ -52,9 +52,9 @@ public class TestPhilosopher extends TestCase {
     }
 
     public void testBecomesHungry() {
-        int compteInitial = table.getCompte();
+        int compteInitial = GraphicTable.compte;
         philosopher01.becomesHungry();
-        assertEquals(compteInitial + 1, table.getCompte());
+        assertEquals(compteInitial + 1, GraphicTable.compte);
     }
 
     public void testPreparesToEat() {

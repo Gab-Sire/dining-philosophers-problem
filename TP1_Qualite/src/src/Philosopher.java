@@ -7,8 +7,8 @@ package src;
 public class Philosopher extends Thread {
 
     public static final int TIME_THINK_MAX = 1000;
-    public static final int TIME_NEXT_FORK = 300;
-    public static final int TIME_EAT_MAX = 300;
+    public static final int TIME_NEXT_FORK = 600;
+    public static final int TIME_EAT_MAX = 600;
     public static final int COLOR_BLACK = -1;
     public static final String THINK = " thinks ";
     public static final String HUNGRY = " is hungry ";
