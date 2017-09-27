@@ -20,6 +20,7 @@ public class TestGraphicTable extends TestCase {
     GraphicTable table;
     Philosopher[] philosophersArray;
     int idPhilosopher01, philosophersArraySize, idRightChopstick01;
+    int angle01;
     
     @Override
     protected void setUp() throws Exception {
@@ -40,6 +41,8 @@ public class TestGraphicTable extends TestCase {
         idPhilosopher01 = 0;
         idRightChopstick01 = 4;
         
+        angle01 = 72;
+        
     }
     
     @Override
@@ -59,6 +62,8 @@ public class TestGraphicTable extends TestCase {
         philosophersArray = null;
         idPhilosopher01 = 0;
         idRightChopstick01 = 0;
+        
+        angle01 = 0;
         
     }
 
@@ -117,6 +122,12 @@ public class TestGraphicTable extends TestCase {
         table.colorPlate(idColorYellow, indexPlatesArray);
         GraphicPlate[] platesArray = table.getPlates();
         assertEquals(idColorYellow, platesArray[indexPlatesArray]);
+    }
+    
+    public void testCalculateNbDegreesPerPerson(){
+        int anglePerPerson = GraphicTable.calculateNbDegreesPerPerson();
+        // 360 / 5 = 72
+        assertEquals(angle01, anglePerPerson);
     }
     
     
