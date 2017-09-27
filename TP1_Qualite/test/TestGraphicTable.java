@@ -112,4 +112,12 @@ public class TestGraphicTable extends TestCase {
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(idColorYellow, chopsticksArray[indexChopsticksArray]);
     }
+    
+    public void testColorPlate(){
+        table.colorPlate(idColorYellow, indexPlatesArray);
+        GraphicPlate[] platesArray = table.getPlates();
+        assertEquals(idColorYellow, platesArray[indexPlatesArray]);
+    }
+    
+    
 }
