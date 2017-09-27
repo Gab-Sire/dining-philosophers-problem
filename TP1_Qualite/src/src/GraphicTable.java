@@ -97,7 +97,7 @@ public class GraphicTable extends InterfaceWindow {
             try {
                 wait();
             } catch (InterruptedException e) {
-                System.out.println("boom !");
+               e.printStackTrace();
             }
         }
         booleanChopsticksArray[c] = false;

@@ -17,6 +17,7 @@ public class TestPhilosopher extends TestCase {
     int philosopherID, leftChopstickID, rightChopstickID, idColor;
     GraphicTable table;
     Philosopher philosopher01;
+    Color colorPhilosopher;
 
     public TestPhilosopher(String testName) {
         super(testName);
@@ -24,12 +25,13 @@ public class TestPhilosopher extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        philosopherID = 2;
+        philosopherID = 1;
         leftChopstickID = 1;
         rightChopstickID = 0;
         idColor = philosopherID;
         table = new GraphicTable();
         philosopher01 = new Philosopher(philosopherID, table, leftChopstickID, rightChopstickID);
+        colorPhilosopher = Color.blue; //1
         philosopher01.start();
     }
 
@@ -41,6 +43,7 @@ public class TestPhilosopher extends TestCase {
         idColor = 0;
         table = null;
         philosopher01 = null;
+        colorPhilosopher = null;
     }
 
     public void testDoSleep() throws InterruptedException {
@@ -54,13 +57,13 @@ public class TestPhilosopher extends TestCase {
     public void testTakeLeftChopstick() {
         philosopher01.takeLeftChopstick();
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
-        assertEquals(idColor, chopsticksArray[leftChopstickID].getColor());
+        assertEquals(colorPhilosopher, chopsticksArray[leftChopstickID].getColor());
     }
 
     public void testTakeRightChopstick() {
-        philosopher01.takeLeftChopstick();
+        philosopher01.takeRightChopstick();
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
-        assertEquals(idColor, chopsticksArray[rightChopstickID].getColor());
+        assertEquals(colorPhilosopher, chopsticksArray[rightChopstickID].getColor());
     }
 
     public void testReleaseLeftChopstick() {
@@ -73,4 +76,7 @@ public class TestPhilosopher extends TestCase {
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(Color.black, chopsticksArray[rightChopstickID].getColor());
     }
+    
+    
+    
 }

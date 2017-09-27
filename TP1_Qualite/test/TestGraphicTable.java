@@ -14,8 +14,6 @@ import src.*;
 public class TestGraphicTable extends TestCase {
   
     int indexChopsticksArray, indexPlatesArray, idColorYellow, compte;
-    GraphicChopstick[] chopsticksArray;
-    GraphicPlate[] platesArray;
     boolean[] boolChopsticksArray;
     GraphicTable table;
     Philosopher[] philosophersArray;
@@ -32,8 +30,6 @@ public class TestGraphicTable extends TestCase {
         
         table = new GraphicTable();
         table.initializeElements();
-        chopsticksArray = table.getChopsticksArray();
-        platesArray = table.getPlates();
         boolChopsticksArray = table.getBooleanChopsticksArray();
         
         philosophersArraySize = 2;
@@ -54,8 +50,6 @@ public class TestGraphicTable extends TestCase {
         compte = 0;
         
         table = null;
-        chopsticksArray = null;
-        platesArray = null;
         boolChopsticksArray = null;
         
         philosophersArraySize = 0;
@@ -129,6 +123,4 @@ public class TestGraphicTable extends TestCase {
         // 360 / 5 = 72
         assertEquals(angle01, anglePerPerson);
     }
-    
-    
 }

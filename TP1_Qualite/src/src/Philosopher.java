@@ -10,9 +10,17 @@ public class Philosopher extends Thread {
     public static final int TIME_NEXT_FORK = 300;
     public static final int TIME_EAT_MAX = 300;
     public static final int COLOR_BLACK = -1;
-    public static final String EAT = "eats";
-    public static final String THINK = "thinks";
-    
+    public static final String THINK = " thinks ";
+    public static final String HUNGRY = " is hungry ";
+    public static final String EAT = " eats for ";
+    public static final String WANT = " wants ";
+    public static final String GET = " got ";
+    public static final String RELEASE = " releases ";
+    public static final String FINISH_THINK = " finished thinking";
+    public static final String FINISH_EAT = " finished eating ";
+    public static final String LEFT = "left";
+    public static final String RIGHT = "right";
+    public static final String CHOPSTICK = " chopstick ";
 
     private GraphicTable table;
 
@@ -45,15 +53,15 @@ public class Philosopher extends Thread {
     }
 
     public synchronized void thinks() {
-        System.out.println(getName() + " thinks");
+        System.out.println(getName() + THINK);
 
         long timeThinking = (long) Math.random() * TIME_THINK_MAX;
         doSleep(timeThinking);
-        System.out.println(getName() + " finished thinking");
+        System.out.println(getName() + FINISH_THINK);
     }
 
     public synchronized void becomesHungry(int phID) {
-        System.out.println(this.getName() + " is hungry");
+        System.out.println(this.getName() + HUNGRY);
         while (this.table.compte == this.table.NUMBER_PEOPLE || this.table.enAttente > 0) {
             this.table.attente();
         }
@@ -67,9 +75,9 @@ public class Philosopher extends Thread {
 
     public synchronized void eats() {
         double timeToSleep = Math.random() * TIME_EAT_MAX;
-        System.out.println(getName() + " eats for " + timeToSleep);
+        System.out.println(getName() + EAT + timeToSleep);
         doSleep((long) timeToSleep);
-        System.out.println(getName() + " finished eating");
+        System.out.println(getName() + FINISH_EAT);
     }
 
     public synchronized void finishesToEat() {
@@ -91,11 +99,11 @@ public class Philosopher extends Thread {
     }
 
     public synchronized void takeChopstick(int chopstickID) {
-        logChopstickAction("wants", chopstickID);
+        logChopstickAction(WANT, chopstickID);
         System.out.println(String.format("repainting ph %d - color %d ", chopstickID, this.ID));
         table.colorChopstick(this.ID, chopstickID);
         table.take(chopstickID);
-        logChopstickAction("got", chopstickID);
+        logChopstickAction(GET, chopstickID);
     }
 
     public synchronized void releaseChopsticks() {
@@ -114,12 +122,12 @@ public class Philosopher extends Thread {
     public synchronized void releaseChopstick(int chopstickID) {
         table.colorChopstick(COLOR_BLACK, chopstickID);
         table.release(chopstickID);
-        logChopstickAction("release", chopstickID);
+        logChopstickAction(RELEASE, chopstickID);
     }
 
     public synchronized void logChopstickAction(String action, int chopstickID) {
-        String whichChopstick = (chopstickID == this.leftChopstickID) ? "left" : "right";
-        System.out.println(getName() + " " + action + " " + whichChopstick + " chopstick");
+        String whichChopstick = (chopstickID == this.leftChopstickID) ? LEFT : RIGHT;
+        System.out.println(getName() + action + whichChopstick + CHOPSTICK);
     }
 
     public synchronized void doSleep(long millis) {

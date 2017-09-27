@@ -59,6 +59,7 @@ public class InterfaceWindow extends Frame implements WindowListener {
     }
 
     public void windowClosing(WindowEvent e) {
+        System.exit(0);
     }
 
     public void windowClosed(WindowEvent e) {
