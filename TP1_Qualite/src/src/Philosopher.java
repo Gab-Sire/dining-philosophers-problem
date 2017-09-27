@@ -21,6 +21,7 @@ public class Philosopher extends Thread {
     public static final String LEFT = "left";
     public static final String RIGHT = "right";
     public static final String CHOPSTICK = " chopstick ";
+    public static final String PHILOSOPHER = "Philosopher ";
 
     private GraphicTable table;
 
@@ -35,7 +36,7 @@ public class Philosopher extends Thread {
         this.leftChopstickID = leftChopstickID;
         this.rightChopstickID = rightChopstickID;
         this.asleep = false;
-        setName("Philosopher " + ID);
+        setName(PHILOSOPHER + ID);
     }
 
     public synchronized void run() {
@@ -53,15 +54,14 @@ public class Philosopher extends Thread {
     }
 
     public synchronized void thinks() {
-        System.out.println(getName() + THINK);
-
+        logPhilosopherAction(THINK);
         long timeThinking = (long) Math.random() * TIME_THINK_MAX;
         doSleep(timeThinking);
-        System.out.println(getName() + FINISH_THINK);
+        logPhilosopherAction(FINISH_THINK);
     }
 
     public synchronized void becomesHungry() {
-        System.out.println(this.getName() + HUNGRY);
+        logPhilosopherAction(HUNGRY);
         while (this.table.compte == this.table.NUMBER_PEOPLE || this.table.enAttente > 0) {
             this.table.attente();
         }
@@ -74,10 +74,19 @@ public class Philosopher extends Thread {
     }
 
     public synchronized void eats() {
-        double timeToSleep = Math.random() * TIME_EAT_MAX;
-        System.out.println(getName() + EAT + timeToSleep);
+        double timeToSleep = calculateTimeToEat();
+        logPhilosopherAction(EAT + timeToSleep);
         doSleep((long) timeToSleep);
-        System.out.println(getName() + FINISH_EAT);
+        logPhilosopherAction(FINISH_EAT);
+    }
+
+    public void logPhilosopherAction(String action) {
+        System.out.println(getName() + action);
+    }
+
+    public double calculateTimeToEat() {
+        double timeToSleep = Math.random() * TIME_EAT_MAX;
+        return timeToSleep;
     }
 
     public synchronized void finishesToEat() {
@@ -100,7 +109,6 @@ public class Philosopher extends Thread {
 
     public synchronized void takeChopstick(int chopstickID) {
         logChopstickAction(WANT, chopstickID);
-        System.out.println(String.format("repainting ph %d - color %d ", chopstickID, this.ID));
         table.colorChopstick(this.ID, chopstickID);
         table.take(chopstickID);
         logChopstickAction(GET, chopstickID);
