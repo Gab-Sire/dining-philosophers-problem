@@ -13,6 +13,7 @@ public class GraphicTable extends InterfaceWindow {
 
     public static final int NUMBER_PEOPLE = 5;
     public static final int TOTAL_DEGREES_IN_CIRCLE = 360;
+    public static final int SIZE_PLATE = 20;
 
     static public int compte = 0;
     static public int enAttente = 0;
@@ -47,7 +48,7 @@ public class GraphicTable extends InterfaceWindow {
         plates = new GraphicPlate[NUMBER_PEOPLE];
 
         for (int i = 0; i < NUMBER_PEOPLE; i++) {
-            plates[i] = new GraphicPlate(i, screenCenter, new Point(screenCenter.x, screenCenter.y - 70), 20);
+            plates[i] = new GraphicPlate(i, screenCenter, new Point(screenCenter.x, screenCenter.y - 70), SIZE_PLATE);
         }
     }
 

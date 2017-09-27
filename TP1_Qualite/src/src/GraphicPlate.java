@@ -28,4 +28,12 @@ public class GraphicPlate extends GraphicTableElement{
         g.fillOval(centerPlate.x, centerPlate.y, size, size);
     }
 
+    public Point getCenterPlate() {
+        return centerPlate;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
 }

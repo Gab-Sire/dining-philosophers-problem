@@ -56,6 +56,17 @@ public class TestGraphicTable extends TestCase {
         }
     }
     
+    public void testInitializePlates(){
+        table.initializePlates();
+        GraphicPlate[] plates = table.getPlates();
+        
+        for(int i = 0; i < plates.length; i++){
+            assertEquals(GraphicTable.SIZE_PLATE, plates[i].getSize());
+            assertEquals(i, plates[i].getID());
+        }
+        
+    }
+    
     public void testTake(){
         table.take(indexChopsticksArray);
         assertEquals(false, boolChopsticksArray[indexChopsticksArray]);

@@ -43,6 +43,10 @@ public abstract class GraphicTableElement {
 
     public abstract void draw(Graphics g);
     
+    public int getID() {
+        return ID;
+    }
+    
     public int getAngle() {
         return angle;
     }
@@ -58,5 +62,4 @@ public abstract class GraphicTableElement {
     public Color getColor() {
         return color;
     }
-
 }
