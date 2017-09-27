@@ -131,4 +131,26 @@ public class Philosopher extends Thread {
         }
         asleep = false;
     }
+
+    public GraphicTable getTable() {
+        return table;
+    }
+
+    public int getLeftChopstickID() {
+        return leftChopstickID;
+    }
+
+    public int getRightChopstickID() {
+        return rightChopstickID;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public boolean isAsleep() {
+        return asleep;
+    }
+    
+    
 }

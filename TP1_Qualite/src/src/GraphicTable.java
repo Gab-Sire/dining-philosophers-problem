@@ -32,7 +32,7 @@ public class GraphicTable extends InterfaceWindow {
         initializeScreenCenter();
         initializeBooleanArray();
         initializePlates();
-        intializeChopsticks();
+        initializeChopsticks();
         initializePhilosophers();
     }
 
@@ -52,7 +52,7 @@ public class GraphicTable extends InterfaceWindow {
         }
     }
 
-    public void intializeChopsticks() {
+    public void initializeChopsticks() {
         chopsticksArray = new GraphicChopstick[NUMBER_PEOPLE];
 
         for (int i = 0; i < 5; i++) {
