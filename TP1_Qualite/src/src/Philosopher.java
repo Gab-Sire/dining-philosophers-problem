@@ -44,7 +44,7 @@ public class Philosopher extends Thread {
 
             table.doesThinking(ID);
             thinks();
-            becomesHungry(ID);
+            becomesHungry();
             doSleep(TIME_NEXT_FORK);
             preparesToEat();
             eats();
@@ -60,7 +60,7 @@ public class Philosopher extends Thread {
         System.out.println(getName() + FINISH_THINK);
     }
 
-    public synchronized void becomesHungry(int phID) {
+    public synchronized void becomesHungry() {
         System.out.println(this.getName() + HUNGRY);
         while (this.table.compte == this.table.NUMBER_PEOPLE || this.table.enAttente > 0) {
             this.table.attente();

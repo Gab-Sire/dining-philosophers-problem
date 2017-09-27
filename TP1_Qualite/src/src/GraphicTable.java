@@ -151,4 +151,20 @@ public class GraphicTable extends InterfaceWindow {
         return chopsticksArray;
     }
 
+    public static int getCompte() {
+        return compte;
+    }
+
+    public static void setCompte(int compte) {
+        GraphicTable.compte = compte;
+    }
+
+    public static int getEnAttente() {
+        return enAttente;
+    }
+
+    public static void setEnAttente(int enAttente) {
+        GraphicTable.enAttente = enAttente;
+    }
+
 }

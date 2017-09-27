@@ -6,6 +6,7 @@
 
 import java.awt.Color;
 import junit.framework.TestCase;
+import org.junit.Test;
 import src.*;
 
 /**
@@ -45,7 +46,14 @@ public class TestPhilosopher extends TestCase {
         philosopher01 = null;
         colorPhilosopher = null;
     }
-
+    
+    public void testBecomesHungry(){
+        int compteInitial = table.getCompte();
+        philosopher01.becomesHungry();
+        assertEquals(compteInitial + 1, table.getCompte());
+    }
+    
+    @Test(timeout = 2000)
     public void testDoSleep() throws InterruptedException {
         Thread thread = new Thread();
         thread.sleep(5000);
