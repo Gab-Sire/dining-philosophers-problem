@@ -19,6 +19,7 @@ public class TestPhilosopher extends TestCase {
     GraphicTable table;
     Philosopher philosopher01;
     Color colorPhilosopher;
+    Color colorEmpty;
 
     public TestPhilosopher(String testName) {
         super(testName);
@@ -33,6 +34,7 @@ public class TestPhilosopher extends TestCase {
         table = new GraphicTable();
         philosopher01 = new Philosopher(philosopherID, table, leftChopstickID, rightChopstickID);
         colorPhilosopher = Color.blue; //1
+        colorEmpty = Color.black;
         philosopher01.start();
     }
 
@@ -45,6 +47,7 @@ public class TestPhilosopher extends TestCase {
         table = null;
         philosopher01 = null;
         colorPhilosopher = null;
+        colorEmpty = null;
     }
     
     public void testBecomesHungry(){
@@ -57,6 +60,12 @@ public class TestPhilosopher extends TestCase {
         philosopher01.preparesToEat();
         GraphicPlate[] platesArray = this.table.getPlates();
         assertEquals(colorPhilosopher,  platesArray[philosopherID].getColor());
+    }
+    
+    public void testFinishesToEat(){
+        philosopher01.finishesToEat();
+        GraphicPlate[] platesArray = this.table.getPlates();
+        assertEquals(colorEmpty,  platesArray[philosopherID].getColor());
     }
     
     @Test(timeout = 2000)
@@ -83,12 +92,12 @@ public class TestPhilosopher extends TestCase {
     public void testReleaseLeftChopstick() {
         philosopher01.releaseLeftChopstick();
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
-        assertEquals(Color.black, chopsticksArray[leftChopstickID].getColor());
+        assertEquals(colorEmpty, chopsticksArray[leftChopstickID].getColor());
     }
     public void testReleaseRightChopstick() {
         philosopher01.releaseRightChopstick();
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
-        assertEquals(Color.black, chopsticksArray[rightChopstickID].getColor());
+        assertEquals(colorEmpty, chopsticksArray[rightChopstickID].getColor());
     }
     
     
