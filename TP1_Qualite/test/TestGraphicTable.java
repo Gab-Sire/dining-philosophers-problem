@@ -54,13 +54,13 @@ public class TestGraphicTable extends TestCase {
     }
     
     public void testBecomesHungry(){
-        table.becomesHungry(idColorYellow);
+        table.becomesHungry(idColorYellow, null);
         assertEquals(Color.yellow, platesArray[indexPlatesArray].getColor());
         assertEquals(++compte, GraphicTable.getCompte());
     }
     
     public void testDoThinking(){
-        table.doThinking(indexPlatesArray, this);
+        table.doesThinking(indexPlatesArray);
         assertEquals(Color.black, platesArray[indexPlatesArray].getColor());
         assertEquals(--compte, GraphicTable.getCompte());
     }

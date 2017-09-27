@@ -23,46 +23,82 @@ public class GraphicTable extends Frame implements WindowListener {
 
     public GraphicTable() {
 
+        configureWindow();
+        initializeElements();
+        displayWindow();
+    }
+
+    public void configureWindow() {
         addWindowListener(this);
         setTitle(PROGRAM_TITLE);
         setSize(TABLE_WIDTH, TABLE_HEIGHT);
         setBackground(TABLE_BACKGROUND);
+    }
 
+    public void initializeElements() {
+        initializeScreenCenter();
+        initializeBooleanArray();
+        initializePlates();
+        intializeChopsticks();
+        initializePhilosophers();
+    }
+
+    public void displayWindow() {
+        setVisible(true);
+        setResizable(false);
+    }
+
+    public void initializeScreenCenter() {
+        screenCenter = new Point(getSize().width / 2, getSize().height / 2);
+    }
+
+    public void initializeBooleanArray() {
         booleanChopsticksArray = new boolean[NUMBER_PEOPLE];
-        plates = new GraphicPlate[NUMBER_PEOPLE];
-        chopsticksArray = new GraphicChopstick[NUMBER_PEOPLE];
 
         for (int i = 0; i <= 4; i++) {
             booleanChopsticksArray[i] = true;
         }
+    }
 
-        screenCenter = new Point(getSize().width / 2, getSize().height / 2);
+    public void initializePlates() {
+        plates = new GraphicPlate[NUMBER_PEOPLE];
 
         for (int i = 0; i < NUMBER_PEOPLE; i++) {
             plates[i] = new GraphicPlate(i, screenCenter, new Point(screenCenter.x, screenCenter.y - 70), 20);
         }
+    }
+
+    public void intializeChopsticks() {
+        chopsticksArray = new GraphicChopstick[NUMBER_PEOPLE];
 
         for (int i = 0; i < 5; i++) {
             chopsticksArray[i] = new GraphicChopstick(i, screenCenter,
                     new Point(screenCenter.x, screenCenter.y - 70),
                     new Point(screenCenter.x, screenCenter.y - 40));
         }
+    }
 
-        show();
-        setResizable(false);
-        
-        Philosopher p0 = new Philosopher(0, this, 0, 4);
-        Philosopher p1 = new Philosopher(1, this, 1, 0);
-        Philosopher p2 = new Philosopher(2, this, 2, 1);
-        Philosopher p3 = new Philosopher(3, this, 3, 2);
-        Philosopher p4 = new Philosopher(4, this, 4, 3);
+    public void initializePhilosophers() {
+        Philosopher[] philosophersArray = new Philosopher[NUMBER_PEOPLE];
 
-        p0.start();
-        p1.start();
-        p2.start();
-        p3.start();
-        p4.start();
+        for (int i = 0; i < philosophersArray.length; i++) {
+            instanciatePhilosopher(i, philosophersArray);
+        }
 
+        startPhilosophers(philosophersArray);
+    }
+
+    public void startPhilosophers(Philosopher[] philosophersArray) {
+        for (int i = 0; i < philosophersArray.length; i++) {
+            philosophersArray[i].start();
+        }
+    }
+
+    public void instanciatePhilosopher(int index, Philosopher[] philosophersArray) {
+        int leftChopstickID = index;
+        int rightChopstickID = (leftChopstickID == 0) ? 4 : leftChopstickID - 1;
+        Philosopher philosopher = new Philosopher(index, this, leftChopstickID, rightChopstickID);
+        philosophersArray[index] = philosopher;
     }
 
     public GraphicPlate[] getPlates() {
@@ -87,8 +123,8 @@ public class GraphicTable extends Frame implements WindowListener {
         }
     }
 
-    public synchronized void doThinking(int phID, GraphicTable graphicTable) {
-        this.plates[phID].setColorByID(-1);
+    public synchronized void doesThinking(int phID) {
+        plates[phID].setColorByID(-1);
         repaint();
         compte--;
         notify();
@@ -130,13 +166,13 @@ public class GraphicTable extends Frame implements WindowListener {
         return TOTAL_DEGREES_IN_CIRCLE / NUMBER_PEOPLE;
     }
 
-    public void colorChopstick(int chID, int phID) {
-        this.chopsticksArray[chID].setColorByID(phID);
+    public void colorChopstick(int colorID, int chopstickID) {
+        this.chopsticksArray[chopstickID].setColorByID(colorID);
         repaint();
     }
 
-    public void colorPlate(int chID, int phID) {
-        this.plates[chID].setColorByID(phID);
+    public void colorPlate(int colorID, int plateID) {
+        this.plates[plateID].setColorByID(colorID);
         repaint();
     }
 
