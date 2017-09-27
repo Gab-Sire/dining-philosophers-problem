@@ -7,6 +7,7 @@
 import java.awt.Color;
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import src.*;
 
 /**
@@ -49,32 +50,30 @@ public class TestPhilosopher extends TestCase {
         colorPhilosopher = null;
         colorEmpty = null;
     }
-    
-    public void testBecomesHungry(){
+
+    public void testBecomesHungry() {
         int compteInitial = table.getCompte();
         philosopher01.becomesHungry();
         assertEquals(compteInitial + 1, table.getCompte());
     }
-    
-    public void testPreparesToEat(){
+
+    public void testPreparesToEat() {
         philosopher01.preparesToEat();
         GraphicPlate[] platesArray = this.table.getPlates();
-        assertEquals(colorPhilosopher,  platesArray[philosopherID].getColor());
+        assertEquals(colorPhilosopher, platesArray[philosopherID].getColor());
     }
     
-    public void testFinishesToEat(){
+    @Test(expected = InterruptedException.class)
+    public void testEats() throws InterruptedException{
+        philosopher01.eats();
+        Thread.sleep(100);
+        philosopher01.interrupt();
+    }
+
+    public void testFinishesToEat() {
         philosopher01.finishesToEat();
         GraphicPlate[] platesArray = this.table.getPlates();
-        assertEquals(colorEmpty,  platesArray[philosopherID].getColor());
-    }
-    
-    @Test(timeout = 2000)
-    public void testDoSleep() throws InterruptedException {
-        Thread thread = new Thread();
-        thread.sleep(5000);
-        philosopher01.doSleep(3000);
-
-        assertTrue(thread.getState() == thread.getState().TIMED_WAITING);
+        assertEquals(colorEmpty, platesArray[philosopherID].getColor());
     }
 
     public void testTakeLeftChopstick() {
@@ -88,8 +87,8 @@ public class TestPhilosopher extends TestCase {
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(colorPhilosopher, chopsticksArray[rightChopstickID].getColor());
     }
-    
-    public void testTakeChopstick(){
+
+    public void testTakeChopstick() {
         philosopher01.takeChopstick(leftChopstickID);
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(colorPhilosopher, chopsticksArray[leftChopstickID].getColor());
@@ -102,18 +101,27 @@ public class TestPhilosopher extends TestCase {
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(colorEmpty, chopsticksArray[leftChopstickID].getColor());
     }
+
     public void testReleaseRightChopstick() {
         philosopher01.releaseRightChopstick();
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(colorEmpty, chopsticksArray[rightChopstickID].getColor());
     }
-    
-    public void testReleaseChopstick(){
+
+    public void testReleaseChopstick() {
         philosopher01.releaseChopstick(rightChopstickID);
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(colorEmpty, chopsticksArray[rightChopstickID].getColor());
         boolean[] booleanChopsticksArray = table.getBooleanChopsticksArray();
         assertEquals(true, booleanChopsticksArray[rightChopstickID]);
     }
-    
+
+    @Test(expected = InterruptedException.class)
+    public void testDoSleep() throws InterruptedException {
+        Thread thread = new Thread();
+        philosopher01.doSleep(3000);
+        Thread.sleep(200);
+        philosopher01.interrupt();
+    }
+
 }
