@@ -5,6 +5,10 @@ import java.lang.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * 
+ * @author Gabriel Cyr
+ */
 public class GraphicTable extends InterfaceWindow {
 
     public static final int NUMBER_PEOPLE = 5;

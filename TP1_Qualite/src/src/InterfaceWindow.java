@@ -13,7 +13,7 @@ import java.awt.event.WindowListener;
 
 /**
  *
- * @author portable
+ * @author Gabriel Cyr
  */
 public class InterfaceWindow extends Frame implements WindowListener {
 

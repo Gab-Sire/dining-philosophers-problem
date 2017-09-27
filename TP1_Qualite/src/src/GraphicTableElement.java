@@ -11,7 +11,7 @@ import java.awt.Point;
 
 /**
  *
- * @author portable
+ * @author Gabriel Cyr
  */
 public abstract class GraphicTableElement {
 

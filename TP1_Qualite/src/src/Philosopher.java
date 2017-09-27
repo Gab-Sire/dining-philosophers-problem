@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * 
+ * @author Gabriel Cyr
+ */
 public class Philosopher extends Thread {
 
     public static final int TIME_THINK_MAX = 1000;

@@ -4,6 +4,10 @@ import java.io.*;
 import java.lang.*;
 import java.awt.*;
 
+/**
+ * 
+ * @author Gabriel Cyr
+ */
 public class GraphicPlate extends GraphicTableElement{
 
     private Point centerPlate;
