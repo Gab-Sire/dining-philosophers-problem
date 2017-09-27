@@ -53,6 +53,12 @@ public class TestPhilosopher extends TestCase {
         assertEquals(compteInitial + 1, table.getCompte());
     }
     
+    public void testPreparesToEat(){
+        philosopher01.preparesToEat();
+        GraphicPlate[] platesArray = this.table.getPlates();
+        assertEquals(colorPhilosopher,  platesArray[philosopherID].getColor());
+    }
+    
     @Test(timeout = 2000)
     public void testDoSleep() throws InterruptedException {
         Thread thread = new Thread();
