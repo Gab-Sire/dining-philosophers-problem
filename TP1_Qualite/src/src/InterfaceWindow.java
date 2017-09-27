@@ -48,10 +48,11 @@ public class InterfaceWindow extends Frame implements WindowListener {
         return centerVertical;
     }
 
-    public void initializeScreenCenter() {
+    public Point initializeScreenCenter() {
         int centerHorizontal = calculateCenterHorizontalScreen();
         int centerVertical = calculateCenterVerticalScreen();
         screenCenter = new Point(centerHorizontal, centerVertical);
+        return screenCenter;
     }
 
     public void windowOpened(WindowEvent e) {
