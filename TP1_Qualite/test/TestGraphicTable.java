@@ -4,79 +4,74 @@
  * and open the template in the editor.
  */
 
-import java.awt.Color;
+import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
-import src.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import src.GraphicChopstick;
+import src.GraphicPlate;
+import src.GraphicTable;
 
 /**
  *
- * @author portable
+ * @author Gabriel Cyr
  */
 public class TestGraphicTable extends TestCase {
-
+  
     int indexChopsticksArray, indexPlatesArray, idColorYellow, compte;
     GraphicChopstick[] chopsticksArray;
     GraphicPlate[] platesArray;
     boolean[] boolChopsticksArray;
     GraphicTable table;
-
-    public TestGraphicTable(String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
+    
+    @Before
+    public void setUp() {
         
         indexChopsticksArray = 0;
         indexPlatesArray = 3;
         idColorYellow = 3;
         compte = 0;
-        GraphicTable.setCompte(compte);
         
         table = new GraphicTable();
         chopsticksArray = table.getChopsticksArray();
         platesArray = table.getPlates();
         boolChopsticksArray = table.getBooleanChopsticksArray();
     }
-
-    @Override
-    protected void tearDown() throws Exception {
+    
+    @After
+    public void tearDown() {
+        
         indexChopsticksArray = 0;
         indexPlatesArray = 0;
         idColorYellow = 0;
         compte = 0;
-        GraphicTable.setCompte(compte);
         
         table = null;
         chopsticksArray = null;
         platesArray = null;
         boolChopsticksArray = null;
     }
-    
-    public void testBecomesHungry(){
-        null.becomesHungry(idColorYellow);
-        assertEquals(Color.yellow, platesArray[indexPlatesArray].getColor());
-        assertEquals(++compte, GraphicTable.getCompte());
+
+ 
+    public void testInitializeBooleanArray(){
+        table.initializeBooleanArray();
+        boolean[] booleanChopsticksArray = table.getBooleanChopsticksArray();
+        
+        for(int i = 0; i < booleanChopsticksArray.length; i++){
+            assertEquals(true, booleanChopsticksArray[i]);
+        }
     }
     
-    public void testDoThinking(){
-        table.doesThinking(indexPlatesArray);
-        assertEquals(Color.black, platesArray[indexPlatesArray].getColor());
-        assertEquals(--compte, GraphicTable.getCompte());
-    }
-    
+    @Test
     public void testTake(){
         table.take(indexChopsticksArray);
         assertEquals(false, boolChopsticksArray[indexChopsticksArray]);
     }
     
+    @Test
     public void testRelease() {
         table.release(indexChopsticksArray);
         assertEquals(true, boolChopsticksArray[indexChopsticksArray]);
     }
-
- 
-    
-   
-
 }

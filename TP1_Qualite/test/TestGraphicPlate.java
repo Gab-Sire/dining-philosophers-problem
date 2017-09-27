@@ -16,9 +16,10 @@ import src.*;
  */
 public class TestGraphicPlate extends TestCase {
 
-    int angle, sizePlate, idColorBlack, idColorRed, idColorYellow;
+    int plateAngle, sizePlate, idColorBlack, idColorRed, idColorYellow;
     Point centerPlate, coordsPlate, resultPoint;
     GraphicPlate plate;
+    int id01, id02, angle01, angle02;
 
     public TestGraphicPlate(String testName) {
         super(testName);
@@ -26,7 +27,7 @@ public class TestGraphicPlate extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
-        angle = 100;
+        plateAngle = 100;
         idColorBlack = -1;
         idColorRed = 0;
         idColorYellow = 3;
@@ -35,12 +36,18 @@ public class TestGraphicPlate extends TestCase {
         centerPlate = new Point(200, 100);
         coordsPlate = new Point(centerPlate.x, centerPlate.y - 70);
         resultPoint = new Point(268, 112);
-        plate = new GraphicPlate(angle, centerPlate, coordsPlate, sizePlate);
+        plate = new GraphicPlate(plateAngle, centerPlate, coordsPlate, sizePlate);
+
+        id01 = 0;
+        id02 = 2;
+
+        angle01 = 0;
+        angle02 = 144;
     }
 
     @Override
     protected void tearDown() throws Exception {
-        angle = 0;
+        plateAngle = 0;
         idColorBlack = 0;
         idColorRed = 0;
         idColorYellow = 0;
@@ -50,19 +57,28 @@ public class TestGraphicPlate extends TestCase {
         coordsPlate = null;
         resultPoint = null;
         plate = null;
+
+        id01 = 0;
+        id02 = 0;
+
+        angle01 = 0;
+        angle02 = 0;
     }
 
-    public void testSetColor() {
+    public void testCalculateAngle() {
+        // 360 / 5 * ID
+        assertEquals(angle01, plate.calculateAngle(id01));
+        assertEquals(angle02, plate.calculateAngle(id02));
+    }
+
+    public void testRotate() {
+        assertEquals(resultPoint, plate.rotate(coordsPlate, centerPlate, plateAngle));
+    }
+
+    public void testSetColorByID() {
         plate.setColorByID(idColorBlack);
         assertEquals(Color.black, plate.getColor());
         plate.setColorByID(idColorYellow);
         assertEquals(Color.yellow, plate.getColor());
     }
-
-    public void testMove() {
-        assertEquals(resultPoint, plate.rotate(coordsPlate, centerPlate, angle));
-    }
-    
-    
-
 }
