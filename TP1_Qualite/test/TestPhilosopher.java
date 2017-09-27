@@ -88,6 +88,14 @@ public class TestPhilosopher extends TestCase {
         GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
         assertEquals(colorPhilosopher, chopsticksArray[rightChopstickID].getColor());
     }
+    
+    public void testTakeChopstick(){
+        philosopher01.takeChopstick(leftChopstickID);
+        GraphicChopstick[] chopsticksArray = table.getChopsticksArray();
+        assertEquals(colorPhilosopher, chopsticksArray[leftChopstickID].getColor());
+        boolean[] booleanChopsticksArray = table.getBooleanChopsticksArray();
+        assertEquals(false, booleanChopsticksArray[leftChopstickID]);
+    }
 
     public void testReleaseLeftChopstick() {
         philosopher01.releaseLeftChopstick();
