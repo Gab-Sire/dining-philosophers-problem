@@ -5,9 +5,7 @@
  */
 
 import java.awt.Color;
-import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
-import org.junit.Test;
 import src.*;
 
 /**
@@ -45,7 +43,6 @@ public class TestPhilosopher extends TestCase {
         philosopher01 = null;
     }
 
-    @Test(timeout = 2000)
     public void testDoSleep() throws InterruptedException {
         Thread thread = new Thread();
         thread.sleep(5000);

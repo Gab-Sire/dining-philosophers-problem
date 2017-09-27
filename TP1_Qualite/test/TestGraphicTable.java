@@ -4,14 +4,8 @@
  * and open the template in the editor.
  */
 
-import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import src.GraphicChopstick;
-import src.GraphicPlate;
-import src.GraphicTable;
+import src.*;
 
 /**
  *
@@ -25,8 +19,8 @@ public class TestGraphicTable extends TestCase {
     boolean[] boolChopsticksArray;
     GraphicTable table;
     
-    @Before
-    public void setUp() {
+    @Override
+    protected void setUp() throws Exception {
         
         indexChopsticksArray = 0;
         indexPlatesArray = 3;
@@ -39,8 +33,8 @@ public class TestGraphicTable extends TestCase {
         boolChopsticksArray = table.getBooleanChopsticksArray();
     }
     
-    @After
-    public void tearDown() {
+    @Override
+    protected void tearDown() throws Exception{
         
         indexChopsticksArray = 0;
         indexPlatesArray = 0;
@@ -53,7 +47,6 @@ public class TestGraphicTable extends TestCase {
         boolChopsticksArray = null;
     }
 
- 
     public void testInitializeBooleanArray(){
         table.initializeBooleanArray();
         boolean[] booleanChopsticksArray = table.getBooleanChopsticksArray();
@@ -63,13 +56,11 @@ public class TestGraphicTable extends TestCase {
         }
     }
     
-    @Test
     public void testTake(){
         table.take(indexChopsticksArray);
         assertEquals(false, boolChopsticksArray[indexChopsticksArray]);
     }
     
-    @Test
     public void testRelease() {
         table.release(indexChopsticksArray);
         assertEquals(true, boolChopsticksArray[indexChopsticksArray]);

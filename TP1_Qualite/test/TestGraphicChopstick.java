@@ -12,7 +12,7 @@ import src.*;
 
 /**
  *
- * @author portable
+ * @author Gabriel Cyr
  */
 public class TestGraphicChopstick extends TestCase {
 
